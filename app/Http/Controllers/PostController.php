@@ -81,6 +81,9 @@ public function store(){
 }
 
 public function edit(Post $post){
+
+    //$this->authorize('view', $post); // Δεν εχουμε εγκριση να ανοίξουμε τα ξένα ποστσ
+    //if(auth()->user()->can('view', $post)){...}
     return view('admin.posts.edit', ['post'=>$post]);
 
 }
@@ -111,6 +114,8 @@ public function update(Post $post){
       }
       $post->title = $input['title'];
       $post->body = $input['body'];
+
+      $this->authorize('update', $post);
 
       $post->update();
       session()->flash('post-updated-message', 'Post Updated ' . $input['title']);
