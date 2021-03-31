@@ -78,6 +78,11 @@ public function store(){
     return redirect()->route('post.index');
 }
 
+public function edit(Post $post){
+    return view('admin.posts.edit', ['post'=>$post]);
+
+}
+
 
 public function destroy(Post $post){
     $post->delete();
