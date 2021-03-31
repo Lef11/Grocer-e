@@ -20,7 +20,9 @@ class PostController extends Controller
 
     public function index(){
 
+        //$posts = auth()->user()->posts;
         $posts = Post::all();
+
 
         foreach($posts as $post){
             $post->post_image = $this->getPostImageAttribute($post->post_image);
@@ -89,6 +91,35 @@ public function destroy(Post $post){
     Session::flash('message', 'Post was deleted');
     return back();
 }
+
+public function update(Post $post){
+    $input = request()->validate([
+        'title' => 'required|min:8|max:255',
+         'post_image'=>'file',
+          'body' => 'required'
+     ]);
+
+     //$post = new Post();
+     //$post->title = request('title');
+
+    if($file = request('post_image')){
+
+         $name = $file->getClientOriginalName();
+          $file->move('images', $name);
+          $input['post_image'] = $name;
+          $post->post_image = $input['post_image'];
+      }
+      $post->title = $input['title'];
+      $post->body = $input['body'];
+
+      $post->update();
+      session()->flash('post-updated-message', 'Post Updated ' . $input['title']);
+      return redirect()->route('post.index');
+
+      //dd($input);
+}
+
+
 }
 
 

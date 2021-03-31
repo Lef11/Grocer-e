@@ -5,7 +5,10 @@
         <div  class="alert alert-danger">{{Session::get('message')}}</div>
     @elseif (session('post-created-message'))
     <div class="alert alert-success">{{session('post-created-message')}}</div>
-        @endif
+      @elseif (session('post-updated-message'))
+      <div class="alert alert-success">{{session('post-updated-message')}}</div>
+
+    @endif
 
     <!-- DataTales Example -->
     <div class="card shadow mb-4">
