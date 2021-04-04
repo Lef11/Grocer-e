@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Models\Post;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
@@ -20,8 +21,10 @@ class PostController extends Controller
 
     public function index(){
 
-        //$posts = auth()->user()->posts;
-        $posts = Post::all();
+        $posts = auth()->user()->posts()->paginate(5); //Εμφανίζει μονο τα post τα οποια εχεις κανει εσυ!
+
+
+        //$posts = Post::all();
 
 
         foreach($posts as $post){
@@ -40,7 +43,7 @@ class PostController extends Controller
 
     }
 
-    public function create(){
+    public function create(User $user){
 
         return view('admin.posts.create');
     }
@@ -62,6 +65,7 @@ class PostController extends Controller
 
 //     }
 public function store(){
+    $this->authorize('create', Post::class);
 
     $input = request()->validate([
       'title' => 'required|min:8|max:255',
@@ -72,17 +76,17 @@ public function store(){
   if($file = request('post_image')){
 
        $name = $file->getClientOriginalName();
-        $file->move('images', $name);
+       $file->move('images', $name);
         $input['post_image'] = $name;
     }
-    auth()->user()->posts()->create($input);
+    auth()->user()->posts()->create($input); //Dinei Id sto post analoga me otn user
     session()->flash('post-created-message', 'Post was Created');
     return redirect()->route('post.index');
 }
 
 public function edit(Post $post){
 
-    //$this->authorize('view', $post); // Δεν εχουμε εγκριση να ανοίξουμε τα ξένα ποστσ
+    $this->authorize('view', $post); // Δεν εχουμε εγκριση να ανοίξουμε τα ξένα ποστσ
     //if(auth()->user()->can('view', $post)){...}
     return view('admin.posts.edit', ['post'=>$post]);
 
@@ -90,6 +94,7 @@ public function edit(Post $post){
 
 
 public function destroy(Post $post){
+    $this->authorize('delete', $post);
     $post->delete();
     Session::flash('message', 'Post was deleted');
     return back();
@@ -106,6 +111,7 @@ public function update(Post $post){
      //$post->title = request('title');
 
     if($file = request('post_image')){
+        $this->authorize('update', $post);
 
          $name = $file->getClientOriginalName();
           $file->move('images', $name);
@@ -115,7 +121,6 @@ public function update(Post $post){
       $post->title = $input['title'];
       $post->body = $input['body'];
 
-      $this->authorize('update', $post);
 
       $post->update();
       session()->flash('post-updated-message', 'Post Updated ' . $input['title']);

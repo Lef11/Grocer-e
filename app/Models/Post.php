@@ -29,7 +29,5 @@ public function getPostImageAttribute($value){
     }
 
     return asset('images/' . $value);
-
 }
-
 }
