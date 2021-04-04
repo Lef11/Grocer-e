@@ -73,7 +73,6 @@
           </div>
         </div>
       </div>
-
     </div>
     <div class="d-flex">
         <div class="mx-auto">
