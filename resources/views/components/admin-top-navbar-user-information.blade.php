@@ -4,7 +4,7 @@
       @if (Auth::check())
       {{auth()->user()->name}}
       @endif
-      <img class="img-profile rounded-circle" src="https://source.unsplash.com/QAB-WJcbgJk/60x60">
+      <img class="img-profile rounded-circle" height="50px" src="{{auth()->user()->avatar}}">
     </a>
 
     <!-- Dropdown - User Information -->
