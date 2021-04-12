@@ -23,17 +23,6 @@
                   <th>Delete</th>
                 </tr>
               </thead>
-              <thead>
-                <tr>
-                  <th>Id</th>
-                  <th>Username</th>
-                  <th>Avatar</th>
-                  <th>Name</th>
-                  <th>Registered date</th>
-                  <th>Updated profile date</th>
-                  <th>Delete</th>
-                </tr>
-              </thead>
               <tbody>
                   @foreach ($users as $user)
                     <tr>
@@ -42,7 +31,8 @@
                         <td>
                             <img height="50px" src="{{$user->avatar}}" alt="">
                         </td>
-                        <td>{{$user->name}}</td>
+                        <td><a href="{{ route('user.profile.show', $user->id) }}">
+                            {{$user->name}}</a></td>
                         <td>{{$user->created_at->diffForhumans()}}</td>
                         <td>{{$user->updated_at->diffForhumans()}}</td>
                         <td>
