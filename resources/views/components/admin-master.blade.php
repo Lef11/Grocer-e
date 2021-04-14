@@ -56,10 +56,10 @@
       </div>
 
       <!-- Nav Item - Pages Collapse Menu -->
-      <x-admin-sidebar-posts-links></x-admin-sidebar-posts-links>
+      <x-admin.sidebar.admin-sidebar-posts-links></x-admin.sidebar.admin-sidebar-posts-links>
 
       @if(auth()->user()->userHasRole('Admin'))
-      <x-admin-sidebar-users-links></x-admin-sidebar-users-links>
+      <x-admin.sidebar.admin-sidebar-users-links></x-admin.sidebar.admin-sidebar-users-links>
     @endif
 
 
@@ -291,11 +291,12 @@
             <div class="topbar-divider d-none d-sm-block"></div>
 
             <!-- Nav Item - User Information -->
-            <x-admin-top-navbar-user-information></x-admin-top-navbar-user-information>
+            <x-admin.top-nav.admin-top-navbar-user-information></x-admin.top-nav.admin-top-navbar-user-information>
 
           </ul>
 
         </nav>
+
         <!-- End of Topbar -->
 
         <!-- Begin Page Content -->
@@ -303,20 +304,16 @@
 
           <!-- Page Heading -->
           @yield('content')
+
         </div>
+
         <!-- /.container-fluid -->
 
       </div>
+
       <!-- End of Main Content -->
 
-      <!-- Footer -->
-      <footer class="sticky-footer bg-white">
-        <div class="container my-auto">
-          <div class="copyright text-center my-auto">
-            <span>Copyright &copy; Your Website 2019</span>
-          </div>
-        </div>
-      </footer>
+
       <!-- End of Footer -->
 
     </div>
@@ -347,6 +344,7 @@
         </div>
       </div>
     </div>
+
   </div>
 
   <!-- Bootstrap core JavaScript-->
@@ -359,7 +357,19 @@
   <!-- Custom scripts for all pages-->
   <script src="{{asset('js/sb-admin-2.js')}}"></script>
 
+   <!-- Footer -->
+   <footer class="sticky-footer bg-white">
+    <div class="container my-auto">
+      <div class="copyright text-center my-auto">
+        <span>Copyright &copy; Your Website 2019</span>
+      </div>
+    </div>
+  </footer>
+
   @yield('scripts')
+
+
 </body>
+
 
 </html>
