@@ -18,6 +18,14 @@ public function index(){
 
     ]);
 }
+public function edit(Role $role){
+
+    return view('admin.roles.edit', ['role'=>$role]);
+
+}
+
+
+
 public function store(){
     request()->validate([
         'name'=> ['required']
@@ -30,6 +38,22 @@ public function store(){
     ]);
         return back();
 }
+
+public function update(Role $role){
+
+    $role->name = Str::ucfirst(request('name'));
+    $role->slug = Str::of(request('name'))->slug('-');
+    if($role->isDirty('name')){
+        session()->flash('role-updated', 'Role updated to : '. request('name'));
+        $role->save();
+    }else{
+        session()->flash('role-updated', 'Nothing has been updated ');
+}
+    return back();
+}
+
+
+
 public function destroy(Role $role){
 
     $role->delete();
@@ -39,6 +63,7 @@ public function destroy(Role $role){
     return back();
 
 }
+
 
 
 
