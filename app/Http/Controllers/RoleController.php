@@ -30,6 +30,15 @@ public function store(){
     ]);
         return back();
 }
+public function destroy(Role $role){
+
+    $role->delete();
+
+    session()->flash('role-deleted', 'Deleted Role '. $role->name);
+
+    return back();
+
+}
 
 
 

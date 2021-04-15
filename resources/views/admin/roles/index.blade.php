@@ -1,6 +1,12 @@
 <x-admin-master>
 @section('content')
 
+@if (session()->has('role-deleted'))
+    <div class="alert alert-danger">
+        {{session('role-deleted')}}
+    </div>
+@endif
+
 <div class="row">
     <div class="col-sm-3">
         <form method="post" action="{{route('roles.store')}}">
@@ -36,6 +42,7 @@
                       <th>Id</th>
                       <th>Name</th>
                       <th>Slug</th>
+                      <th>Delete</th>
                     </tr>
                   </thead>
                   <tfoot>
@@ -43,6 +50,7 @@
                         <th>Id</th>
                         <th>Name</th>
                         <th>Slug</th>
+                        <th>Delete</th>
                     </tr>
         </tfoot>
         <tbody>
@@ -51,6 +59,17 @@
                 <td>{{$role->id}}</td>
                 <td>{{$role->name}}</td>
                 <td>{{$role->slug}}</td>
+                <td>
+                    <form method="post" action="{{route('roles.destroy', $role->id)}}">
+                        @csrf
+                        @method('DELETE')
+
+                        <button type="submit" class="btn btn-danger">Delete</button>
+
+
+                    </form>
+
+                </td>
             </tr>
             @endforeach
         </tbody>
