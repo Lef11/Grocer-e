@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Role;
 use Illuminate\Support\Str;
+use App\Models\Permission;
 
 class RoleController extends Controller
 {
@@ -20,7 +21,10 @@ public function index(){
 }
 public function edit(Role $role){
 
-    return view('admin.roles.edit', ['role'=>$role]);
+    return view('admin.roles.edit', [
+        'role'=>$role,
+        'permissions'=> Permission::all()
+        ]);
 
 }
 
