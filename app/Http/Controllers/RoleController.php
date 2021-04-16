@@ -55,6 +55,18 @@ public function update(Role $role){
 }
     return back();
 }
+ public function attachPermission(Role $role){
+
+    $role->permissions()->attach(request('permission'));
+    return back();
+
+ }
+ public function detachPermission(Role $role){
+
+    $role->permissions()->detach(request('permission'));
+    return back();
+
+ }
 
 
 
